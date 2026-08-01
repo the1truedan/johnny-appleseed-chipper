@@ -155,6 +155,22 @@ existing anti-piracy detection vendors.
   training corpora — that would be the opposite of the stated mission,
   not an extension of it.
 
+
+## How this came to be
+
+Care work produces *paper*: notices, letters, scans, exports. Early M.A.N.A.G.E.R.
+design chats (Grok, Claude, ChatGPT) kept returning to the same problem: how
+do you classify and hash what you **already hold**, keep a plain custody trail,
+and never pretend a receipt log is a court seal?
+
+This repo is the **design sketch** for that pipeline (Johnny Appleseed /
+C.H.I.P.P.E.R.S. / C.H.A.I.N.S.), split out of the monorepo so the idea can be
+reviewed on its own. Docs only for now — on purpose. Public after ACL Phase 1
+so the architecture is visible without dumping private care files.
+
+**Timeline anchors:** mission pivot **13 April 2026**; monorepo coding from
+**June 2026**; modular public sketches late **July 2026**.
+
 ## License
 
 MIT — see `LICENSE`.
@@ -164,3 +180,12 @@ MIT — see `LICENSE`.
 This is an independent architecture sketch. It is not affiliated with,
 endorsed by, or sponsored by any company, product, or service referenced
 generically above.
+
+---
+
+<p align="left">
+  <a href="https://linktr.ee/the1truedan"><img src="https://img.shields.io/badge/Linktree-39E09B?style=for-the-badge&logo=linktree&logoColor=white" alt="Linktree"></a>
+  <a href="https://ko-fi.com/the1truedan"><img src="https://img.shields.io/badge/Ko--fi-F16061?style=for-the-badge&logo=ko-fi&logoColor=white" alt="Ko-fi"></a>
+</p>
+
+**© 2026 M.A.N.A.G.E.R. LLC** — *prepare for the care when we cannot be there*
