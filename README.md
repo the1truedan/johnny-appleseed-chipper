@@ -1,37 +1,30 @@
 # Johnny Appleseed + C.H.I.P.P.E.R.S. + C.H.A.I.N.S.
 
-**Status:** early architecture sketch / pre-implementation design. This repo
-documents the intended shape of a content-ingestion, provenance, and custody
-system — it is not a working release yet, and no code ships here on
-purpose.
+**Status:** design notes only. No product code ships here yet — on purpose.
 
-## What this is
+## What this is about
 
-A three-part pipeline for turning already-acquired documents and files
-(never scraped, never crawled) into safe, deduplicated, indexed artifacts
-with an auditable chain of custody:
+How do you take files you **already have** (scans, exports, archives — not
+scraped off the open web) and turn them into something searchable, de-duplicated,
+and honest about where each copy came from?
 
-- **Johnny Appleseed** — classification layer for materials the operator
-  already has in hand.
-- **C.H.I.P.P.E.R.S.** — Content Hashing, Inspection, Parsing, Provenance,
-  Extraction, Retrieval, Simplification. Produces deterministic artifacts
-  and index documents; unknown/binary formats are recorded as metadata
-  only, never blindly parsed.
-- **C.H.A.I.N.S.** — Custody History Assurance Integrated Network System.
-  Hash-linked, append-only ingestion receipts with sequential-integrity
-  verification. Explicitly **tamper-evident, not** immutable storage,
-  identity proof, legal certification, or cryptographic signature
-  verification — the distinction matters and should never be blurred in
-  how this kind of system gets described.
+This repo sketches three cooperating layers:
+
+- **Johnny Appleseed** — figure out *what kind of thing* a file is before
+  you pour energy into parsing it.
+- **C.H.I.P.P.E.R.S.** — hash, inspect, parse when safe, and emit stable
+  artifacts + index records. Unknown binaries get metadata only — we do not
+  “open everything and hope.”
+- **C.H.A.I.N.S.** — a simple, hash-linked receipt log so you can see *what
+  was ingested when*. That is **tamper-evident bookkeeping**, not a court
+  seal, blockchain, or identity proof. Please do not market it as more than
+  it is.
 
 ## Design principles
 
-- No crawling, no scraping — this only classifies/processes materials the
-  operator already possesses.
-- Deterministic, reproducible artifacts; every derived tier records its
-  parent digest and transformation.
-- Human review gates any consequential decision (merge proposals, license
-  changes, custody escalation). Nothing in this design auto-decides.
+- No crawling or scraping — only materials the operator already holds.
+- Same inputs should produce the same digests and derived tiers.
+- A human still decides merges, license calls, and anything high-stakes.
 
 ## Module seam (interface sketch)
 
