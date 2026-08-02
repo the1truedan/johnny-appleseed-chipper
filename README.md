@@ -2,6 +2,8 @@
 
 **Status:** design notes only. No product code ships here yet — on purpose.
 
+**Public handoff map:** [INDEX.md](./INDEX.md) · process templates under [`docs/`](./docs/)
+
 ## What this is about
 
 How do you take files you **already have** (scans, exports, archives — not
