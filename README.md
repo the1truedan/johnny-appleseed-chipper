@@ -1,6 +1,9 @@
 # Johnny Appleseed + C.H.I.P.P.E.R.S. + C.H.A.I.N.S.
 
-**Status:** design notes only. No product code ships here yet — on purpose.
+**Status:** 2026-08-04 release candidate — design contract and audit vocabulary.
+No product code ships here yet — on purpose. The release makes the intended
+scope, C.H.A.I.N.S. receipt boundary, and M.A.N.A.G.E.R. transparency path
+reviewable before implementation begins.
 
 **Public handoff map:** [INDEX.md](./INDEX.md) · process templates under [`docs/`](./docs/)
 
@@ -27,6 +30,10 @@ This repo sketches three cooperating layers:
 - No crawling or scraping — only materials the operator already holds.
 - Same inputs should produce the same digests and derived tiers.
 - A human still decides merges, license calls, and anything high-stakes.
+
+See [release scope and intentions](./docs/RELEASE_SCOPE_AND_INTENTIONS.md) and
+the [C.H.A.I.N.S. audit contract](./docs/CHAINS_AUDIT_CONTRACT.md) for the
+development trajectory and the evidence expected at each stage.
 
 ## Module seam (interface sketch)
 
