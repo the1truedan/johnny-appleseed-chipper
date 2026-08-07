@@ -1,1 +1,7 @@
 .DS_Store
+# Private agent context (local only — never public)
+AGENTS.md
+AGENT_COORDINATION.md
+.hippo/
+.env
+.env.*

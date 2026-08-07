@@ -1,15 +1,19 @@
 # Public index — Johnny Appleseed + C.H.I.P.P.E.R.S. + C.H.A.I.N.S.
 
-**Purpose:** Hand-off map for contributors and future-you when this design
-becomes real code. Nothing here requires private LAN paths or care data.
+**Purpose:** Hand-off map for contributors and future-you.  
+**Status:** **public alpha intent** (docs-first). Parallel lab development continues elsewhere.  
+Nothing here requires private LAN paths or care data.
 
 | Doc | What it is |
 |-----|------------|
-| [README.md](./README.md) | Public-facing problem statement + seam sketch |
-| [docs/PROCESS_TEMPLATES.md](./docs/PROCESS_TEMPLATES.md) | Reusable historical process templates (scan → hash → gate → catalog) |
+| [README.md](./README.md) | Plain-language alpha pitch + socratic ask + hero art |
+| [docs/PROCESS_TEMPLATES.md](./docs/PROCESS_TEMPLATES.md) | Reusable process templates (scan → hash → gate → catalog) |
 | [docs/STAGED_CATALOG_LAYOUT.md](./docs/STAGED_CATALOG_LAYOUT.md) | How to stage indexes without walking NFS from agents |
 | [docs/DEDUP_LAYERS.md](./docs/DEDUP_LAYERS.md) | L1 structure / L2 content-hash / L3 bees — do not conflate |
+| [docs/PACKAGE_MANAGER_CATALOG.md](./docs/PACKAGE_MANAGER_CATALOG.md) | brew · apt · snap · winget · choco · FluxDown · versioning earmarks |
 | [docs/HANDOFF_CHECKLIST.md](./docs/HANDOFF_CHECKLIST.md) | Pre-public and pre-merge checklist |
+| [docs/MANAGER_MODULE_MAP.md](./docs/MANAGER_MODULE_MAP.md) | How Johnny/CHIPPER/CHAINS touch other M.A.N.A.G.E.R. surfaces |
+| [docs/assets/](./docs/assets/) | README hero art (dedup + architecture) |
 
 ## Domain one-liners
 
@@ -21,10 +25,15 @@ becomes real code. Nothing here requires private LAN paths or care data.
 
 | Repo / surface | Role |
 |----------------|------|
-| [ai-gateway](https://github.com/the1truedan/ai-gateway) | LAN model door + observability notes (sanitized) |
-| [fast-models](https://github.com/the1truedan/ai-gateway) `deploy/` notes | Shared AI file pool; bees sizing history |
+| [ai-gateway](https://github.com/the1truedan/ai-gateway) | Model door + observability notes (sanitized) |
+| [fast-models / deploy notes](https://github.com/the1truedan/ai-gateway) | Shared AI file pool; bees sizing history (when published) |
 
-## Status
+## Status waves
 
-Design + process templates. Implementation intentionally gated; see HANDOFF
-checklist before writing production parsers.
+| Wave | Meaning |
+|------|---------|
+| late July 2026 | First modular docs sketch |
+| 2026-08-06 | Alpha-intent public narrative cleanup + art + package catalog |
+| later | Implementation when seams stabilize under scrutiny |
+
+Implementation intentionally gated; see HANDOFF checklist before writing production parsers.

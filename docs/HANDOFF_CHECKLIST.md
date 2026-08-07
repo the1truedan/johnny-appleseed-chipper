@@ -3,10 +3,13 @@
 ## Before pushing a public mirror of related stacks
 
 - [ ] No `.env`, key files, or credential dumps  
-- [ ] LAN IPs / hostnames → roles (`desk-host`, `gpu-host`, `nas-host`)  
-- [ ] Dashboards: Prometheus UIDs may be placeholders; document import steps  
+- [x] LAN IPs / hostnames → roles (`desk-host`, `gpu-host`, `nas-host`) — recheck 2026-08-06  
+- [x] README states **public alpha intent** (docs-first; not finished product)  
+- [x] Late July modular sketch narrative cleaned (status waves + socratic ask)  
+- [x] Package manager catalog + hero art; no private LAN download URLs in tree  
+- [ ] Dashboards: Prometheus UIDs may be placeholders; document import steps in ops stacks  
 - [ ] Incident write-ups keep **process truth**, drop private log absolute paths if sensitive  
-- [ ] README states design-only vs shipped code  
+- [ ] Human: `gh repo edit … --visibility public` then protect `main` (free plan after public)
 
 ## Before implementing Johnny / CHIPPER for real
 
