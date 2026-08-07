@@ -9,7 +9,7 @@
 - [x] Package manager catalog + hero art; no private LAN download URLs in tree  
 - [ ] Dashboards: Prometheus UIDs may be placeholders; document import steps in ops stacks  
 - [ ] Incident write-ups keep **process truth**, drop private log absolute paths if sensitive  
-- [ ] Human: `gh repo edit … --visibility public` then protect `main` (free plan after public)
+- [x] Human/agent: visibility **public** 2026-08-06 + `main` protected (no force-push)
 
 ## Before implementing Johnny / CHIPPER for real
 
