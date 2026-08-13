@@ -16,6 +16,17 @@ this project's own "docs-first, scrutiny welcome" framing, disclosing how
 it's actually built seemed worth stating explicitly rather than leaving
 implicit.
 
+## GitHub display
+
+Both trailers above are the attribution. GitHub only links a co-author when
+the email is claimed by a GitHub account. Anthropic has claimed
+`noreply@anthropic.com` ([claude](https://github.com/claude)), so those
+commits show a linked contributor. xAI has not claimed `noreply@x.ai`, so
+Grok stays an unlinked name on commit pages and does not appear in the
+Contributors graph. This repo will not invent a stand-in Grok identity. If
+xAI later claims the email, existing trailers become linkable without a
+rewrite.
+
 ## Context stack (development process)
 
 Human-directed sessions keep durable context in three layers:
