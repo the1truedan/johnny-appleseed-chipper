@@ -20,7 +20,8 @@ catalog wave for any large model/cache pool.
 4. Store under a **catalog** prefix, never rewrite originals.  
 5. Record operator, UTC time, tool version, host **role** (desk / gpu / nas).
 
-**Anti-pattern:** Agent runs `find /mnt/ai-data` from a Mac NFS client.
+**Anti-pattern:** Agent runs unbounded `find` across a storage-pool mount
+from a desk-host NFS client.
 
 **Outputs:** `structure_inventory_<date>.json` + short markdown scorecard.
 
@@ -32,7 +33,7 @@ catalog wave for any large model/cache pool.
 SHA256 up front.
 
 ```text
-exact size → sample_hash (head/tail) → full SHA256 only on multi-member sample groups
+exact size → sample_hash (4 MiB head/tail) → full SHA256 only on multi-member sample groups
 ```
 
 | Confidence | Meaning | Auto-delete? |
@@ -40,13 +41,19 @@ exact size → sample_hash (head/tail) → full SHA256 only on multi-member samp
 | basename + size | Weak | No |
 | sample match | Escalate | No (unless explicit allow) |
 | **sha256** | Proven dual | Only after verification-manifest |
+| dir_tree | Same relative paths + sizes | No — structure candidate |
+
+Skip callable venv trees (`.venv` / `venv`) unless the operator asked for
+an env index. Do not hash them as weight twins.
 
 **Gate:**
 
 1. Report-only scan → catalog JSON.  
-2. Dual-verify on quarantine / candidate set (readable on all required hosts).  
-3. Prefer same-filesystem **quarantine** before permanent `rm`.  
-4. Manifest must say `verified=true` before any execute path.
+2. Optional **stage** (Template G): keep sha256 groups only, for reading.  
+3. Dual-verify on quarantine / candidate set (readable on all required hosts).  
+4. Prefer same-filesystem **quarantine** before permanent `rm`.  
+5. Manifest must say `verified=true` **and** `all_hosts_readable=true`
+   before any execute path. Sample-only is not enough.
 
 **Outputs:** `_ai_data_dedup_audit.json` (or equivalent), dual-verify receipt,
 optional quarantine wave id.
@@ -57,12 +64,17 @@ optional quarantine wave id.
 
 **Goal:** Promote “looks dual” → “proven dual on all hosts.”
 
-1. Stage **tools** next to the job (scripts are not on the data pool).  
+1. Stage **tools** next to the job (scripts are not on the data pool —
+   a console that only sees the pool will not find them).  
 2. Point the job at an **ai-root** mount *inside* the storage runtime.  
 3. Wave directory (hidden ok): `.dedup_quarantine/<wave>/`.  
 4. Coverage target (e.g. 95%) + max GB per run for safety.  
 5. Emit machine-readable verify JSON + human markdown summary.  
-6. Only then allow apply/purge tools with `--verification-manifest`.
+6. Only then allow apply/purge tools with `--verification-manifest`.  
+7. If the staged JSON used different field names than the apply tool,
+   reshape first. Similar is not the same schema.  
+8. Vendor shared-lib risk: match `.so`, `.so.N`, `.dylib` — not a
+   literal `.so` suffix.
 
 **Outputs:** `quarantine_dual_verify_<wave>.json` + `.md`.
 
@@ -120,6 +132,23 @@ Before any public mirror:
 
 ---
 
+## Template G — Stage reclaim candidates (read-only)
+
+**Goal:** Narrow a report-only L2 audit to what a human should actually
+look at, without pretending the files moved.
+
+1. Keep **`confidence=sha256` groups only**.  
+2. Write a staged JSON under the catalog prefix.  
+3. If `reclaimable_bytes` summed from groups disagrees with a summary
+   field, **report both** and flag a gap over ~2%. Do not pick a winner.  
+4. Do **not** emit a verification manifest.  
+5. Do **not** call apply / purge from this step.
+
+This sits between Template B (report) and Template C (dual-verify).
+It is a reading aid.
+
+---
+
 ## Mapping to modules (when code lands)
 
 | Template | Module |
@@ -129,3 +158,4 @@ Before any public mirror:
 | D | Ops / storage plane (bees) — adjacent, not CHIPPER itself |
 | E | Catalog + future Orchard SoR |
 | F | Release engineering for all public *-release trees |
+| G | Read-only sha256 filter of an L2 report (not an apply) |

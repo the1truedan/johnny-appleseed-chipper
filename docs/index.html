@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Johnny Appleseed · C.H.I.P.P.E.R.S. · C.H.A.I.N.S.</title>
+<meta name="description" content="Classify, hash, and keep a custody trail for files you already hold. Docs-first public alpha. Not a crawl. Not a court seal." />
+<link rel="icon" href="favicon.svg" type="image/svg+xml" />
+<style>
+  :root {
+    --bg: #14110d;
+    --bg-panel: #1c1812;
+    --bg-panel-2: #241f17;
+    --line: #3a3226;
+    --fg: #f3ead8;
+    --fg-dim: #b7a98c;
+    --fg-dimmer: #7a6e58;
+    --accent: #c9a227;
+    --accent-soft: #d4c48a;
+    --leaf: #7a9a5a;
+    --crate: #4a8a86;
+    --wax: #a33b3b;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: var(--bg); color: var(--fg); }
+  body {
+    font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+    line-height: 1.6; -webkit-font-smoothing: antialiased;
+  }
+  a { color: inherit; }
+  ::selection { background: var(--accent); color: var(--bg); }
+
+  .hero { position: relative; overflow: hidden; border-bottom: 1px solid var(--line); }
+  #crate-rain { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0.45; }
+  .hero-inner {
+    position: relative; z-index: 1; max-width: 920px; margin: 0 auto;
+    padding: 5.5rem 1.5rem 4rem; text-align: center;
+  }
+  .eyebrow {
+    font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+    font-size: 0.72rem; letter-spacing: 0.22em; text-transform: uppercase;
+    color: var(--accent-soft); margin: 0 0 1.4rem;
+  }
+  .wordmark {
+    margin: 0;
+    font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+    font-weight: 700; font-size: clamp(1.55rem, 5vw, 2.7rem);
+    letter-spacing: 0.02em;
+    text-shadow: 0 0 8px rgba(201,162,39,0.35), 0 0 24px rgba(122,154,90,0.18);
+  }
+  .wordmark .ja { color: var(--leaf); }
+  .wordmark .ch { color: var(--accent); }
+  .wordmark .cn { color: var(--crate); }
+  .tagline {
+    max-width: 50ch; margin: 1.4rem auto 0; font-size: 1.1rem;
+    color: var(--fg-dim); text-wrap: balance;
+  }
+  .hero-cta {
+    display: flex; justify-content: center; align-items: center;
+    gap: 0.9rem; flex-wrap: wrap; margin-top: 2.4rem;
+  }
+  .btn {
+    font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+    font-size: 0.85rem; text-decoration: none; padding: 0.65rem 1.1rem;
+    border-radius: 3px; border: 1px solid var(--line);
+    background: var(--bg-panel); color: var(--fg);
+  }
+  .btn:hover { border-color: var(--accent); color: var(--accent-soft); }
+  .btn.primary { background: var(--accent); border-color: var(--accent); color: var(--bg); font-weight: 600; }
+  .btn.primary:hover { background: var(--accent-soft); }
+  .version-chip {
+    font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+    font-size: 0.78rem; color: var(--fg-dimmer);
+  }
+  .version-chip b { color: var(--accent); }
+
+  section.band { max-width: 980px; margin: 0 auto; padding: 4.2rem 1.5rem; }
+  .section-head { text-align: center; margin-bottom: 2.6rem; }
+  .section-eyebrow {
+    font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+    font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--fg-dimmer); margin: 0 0 0.7rem;
+  }
+  .section-title { margin: 0; font-size: 1.5rem; font-weight: 600; text-wrap: balance; }
+  .section-sub { max-width: 54ch; margin: 0.7rem auto 0; color: var(--fg-dim); }
+
+  .stack-grid {
+    display: grid; grid-template-columns: repeat(2, 1fr); gap: 1px;
+    background: var(--line); border: 1px solid var(--line); border-radius: 6px; overflow: hidden;
+  }
+  .stack-card {
+    background: var(--bg-panel); padding: 1.5rem 1.4rem; display: flex;
+    flex-direction: column; gap: 0.5rem; text-decoration: none; min-height: 148px;
+  }
+  a.stack-card:hover { background: var(--bg-panel-2); }
+  .stack-card .role {
+    font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+    font-size: 0.68rem; letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--accent-soft);
+  }
+  .stack-card h3 { margin: 0; font-size: 1.08rem; }
+  .stack-card p { margin: 0; font-size: 0.9rem; color: var(--fg-dim); flex-grow: 1; }
+  .stack-card .link-hint {
+    font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+    font-size: 0.74rem; color: var(--accent);
+  }
+
+  .shots { display: grid; grid-template-columns: 1fr; gap: 1.2rem; }
+  .shot {
+    background: var(--bg-panel); border: 1px solid var(--line);
+    border-radius: 8px; overflow: hidden;
+  }
+  .shot img { display: block; width: 100%; height: auto; }
+  .shot figcaption {
+    padding: 0.75rem 1rem; font-size: 0.82rem; color: var(--fg-dimmer);
+    font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  }
+
+  .story { max-width: 62ch; margin: 0 auto; }
+  .story p { color: var(--fg-dim); margin: 0 0 1rem; }
+  .story strong { color: var(--fg); }
+  .tl {
+    font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+    font-size: 0.78rem; color: var(--accent-soft);
+  }
+  pre {
+    background: var(--bg-panel); border: 1px solid var(--line);
+    border-radius: 6px; padding: 1rem 1.1rem; overflow-x: auto;
+    font-size: 0.82rem; color: var(--accent-soft); text-align: left;
+  }
+  .callout {
+    background: var(--bg-panel); border: 1px solid var(--line);
+    border-left: 3px solid var(--wax); border-radius: 6px;
+    padding: 1.1rem 1.2rem; color: var(--fg-dim); max-width: 62ch; margin: 0 auto;
+  }
+  .callout strong { color: var(--fg); }
+
+  footer { border-top: 1px solid var(--line); padding: 2.4rem 1.5rem 3rem; }
+  .footer-inner {
+    max-width: 980px; margin: 0 auto; display: flex;
+    justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;
+  }
+  .footer-links {
+    display: flex; gap: 1.4rem; flex-wrap: wrap;
+    font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+    font-size: 0.8rem; color: var(--fg-dim);
+  }
+  .footer-links a { text-decoration: none; }
+  .footer-links a:hover { color: var(--accent-soft); }
+  .mu-mark {
+    font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+    font-size: 0.8rem; color: var(--fg-dimmer);
+  }
+  .mu-mark span { color: var(--accent); }
+
+  @media (max-width: 720px) {
+    .stack-grid { grid-template-columns: 1fr; }
+    .wordmark { font-size: clamp(1.25rem, 7vw, 1.8rem); }
+  }
+  @media (prefers-reduced-motion: reduce) { #crate-rain { display: none; } }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <canvas id="crate-rain" aria-hidden="true"></canvas>
+  <div class="hero-inner">
+    <p class="eyebrow">public alpha intent · docs-first · not a crawl</p>
+    <h1 class="wordmark"><span class="ja">Johnny</span> · <span class="ch">CHIPPERS</span> · <span class="cn">CHAINS</span></h1>
+    <p class="tagline">Files you already have. Figure out what they are, hash the twins, keep a receipt. Do not call the receipt a court seal.</p>
+    <div class="hero-cta">
+      <a class="btn primary" href="https://github.com/the1truedan/johnny-appleseed-chipper">View on GitHub</a>
+      <a class="btn" href="https://github.com/the1truedan/johnny-appleseed-chipper/releases/tag/v0.2.0">v0.2.0</a>
+      <a class="btn" href="https://the1truedan.github.io/fast-models/">fast-models</a>
+      <span class="version-chip">v<b>0.2.0</b> · MIT · public</span>
+    </div>
+  </div>
+</div>
+
+<section class="band">
+  <div class="section-head">
+    <p class="section-eyebrow">the trio</p>
+    <h2 class="section-title">Classify. Hash. Custody. Three crates, one job.</h2>
+    <p class="section-sub">Most AI data platforms want to crawl the open web. This sketch does the opposite: materials already in your hands.</p>
+  </div>
+  <div class="stack-grid">
+    <div class="stack-card">
+      <span class="role">classify</span>
+      <h3>Johnny Appleseed</h3>
+      <p>Figure out what kind of thing a file is before you spend energy parsing it. Operator-owned materials only.</p>
+    </div>
+    <div class="stack-card">
+      <span class="role">hash · inspect</span>
+      <h3>C.H.I.P.P.E.R.S.</h3>
+      <p>Content Hashing, Inspection, Parsing, Provenance, Extraction, Retrieval, Simplification. Unknown binaries stay metadata-only.</p>
+    </div>
+    <div class="stack-card">
+      <span class="role">receipts</span>
+      <h3>C.H.A.I.N.S.</h3>
+      <p>Custody History Assurance Integrated Network System. Tamper-evident bookkeeping — not blockchain cosplay, not identity proof.</p>
+    </div>
+    <a class="stack-card" href="https://github.com/the1truedan/johnny-appleseed-chipper/blob/main/docs/CHAINS_AUDIT_CONTRACT.md">
+      <span class="role">contract</span>
+      <h3>Audit invariants</h3>
+      <p>Append-only. Parent digest on every child. Quarantine and reject are first-class. “Verified” is reproducible, not legally true.</p>
+      <span class="link-hint">CHAINS_AUDIT_CONTRACT.md →</span>
+    </a>
+  </div>
+</section>
+
+<section class="band">
+  <div class="section-head">
+    <p class="section-eyebrow">what it looks like</p>
+    <h2 class="section-title">Seeds in the top crate. Gears in the middle. Receipts on a chain.</h2>
+  </div>
+  <div class="shots">
+    <figure class="shot">
+      <img src="assets/hero-architecture-trio.jpg" alt="Watercolor crates: Johnny Appleseed seeds, CHIPPERS gears and index cards, CHAINS receipts on a chain" />
+      <figcaption>CLASSIFY · HASH · CUSTODY — conceptual crate stack</figcaption>
+    </figure>
+    <figure class="shot">
+      <img src="assets/hero-dedup-custody.jpg" alt="Three bands: classified papers and boxes, a glowing hash cube splitting identical files, wax-sealed custody envelopes" />
+      <figcaption>Classify the pile. Hash the twins. Seal the receipt.</figcaption>
+    </figure>
+  </div>
+</section>
+
+<section class="band">
+  <div class="section-head">
+    <p class="section-eyebrow">do not conflate</p>
+    <h2 class="section-title">Three reclaim layers. A catalog is not a fourth.</h2>
+    <p class="section-sub">File-hash reclaim is not bees. Structure clutter is not byte proof. The Johnny index is a call graph, not a delete plan.</p>
+  </div>
+<pre>L1  structure     dual install roots, husks, path chaos
+L2  content-hash  size → 4 MiB sample → SHA-256 (only on collisions)
+L3  bees          Btrfs extent sharing — occupancy is not “disk full”
+
+catalog plane     classify → hash envelope → custody receipt
+                  (different job; do not renumber L1–L3 into it)</pre>
+</section>
+
+<section class="band">
+  <div class="section-head">
+    <p class="section-eyebrow">lab checks · 2026-08</p>
+    <h2 class="section-title">The internal tool learned a few sharp edges. The public notes now say them.</h2>
+    <p class="section-sub">Process truth only. No private hosts, no care data, no “we shipped extractors.”</p>
+  </div>
+  <div class="stack-grid">
+    <div class="stack-card">
+      <span class="role">walks</span>
+      <h3>No unbounded find</h3>
+      <p>Agents read catalogs. Structure probes are allowlisted, depth-capped, no follow-mount. A client-side walk of a storage pool is the anti-pattern.</p>
+    </div>
+    <div class="stack-card">
+      <span class="role">venvs</span>
+      <h3>Skip callable envs on L2</h3>
+      <p>L2 hash audits skip <code>.venv</code> / <code>venv</code> by default. Darwin and Linux environments are not interchangeable. Never share them across OS families.</p>
+    </div>
+    <div class="stack-card">
+      <span class="role">gate</span>
+      <h3>sha256 + a real manifest</h3>
+      <p>Apply / purge needs <code>verified=true</code> and <code>all_hosts_readable=true</code>. Sample match is not enough. A staging filter is not an apply.</p>
+    </div>
+    <div class="stack-card">
+      <span class="role">schema</span>
+      <h3>Reshape before apply</h3>
+      <p>Staged JSON and the apply tool used different field names and looked similar enough to be dangerous. Reshape, or do not run it.</p>
+    </div>
+    <div class="stack-card">
+      <span class="role">libs</span>
+      <h3>.so is not just .so</h3>
+      <p>Vendor shared libraries come as <code>.so</code>, <code>.so.12</code>, <code>.dylib</code>. A naive suffix check misses the ones that matter.</p>
+    </div>
+    <div class="stack-card">
+      <span class="role">mount</span>
+      <h3>zstd is not a cron job</h3>
+      <p>Pool compression is a filesystem / mount property. bees occupancy is not disk-full. Same-filesystem <code>mv</code> does not free space until <code>rm</code>.</p>
+    </div>
+    <div class="stack-card">
+      <span class="role">tools</span>
+      <h3>Probe, don’t assume</h3>
+      <p>Record <code>{tool_id, version, manager, host_role, probed_at}</code>. No silent <code>brew upgrade</code>. “latest” is not provenance for a weight.</p>
+    </div>
+    <div class="stack-card">
+      <span class="role">stage</span>
+      <h3>Download on the storage host</h3>
+      <p>Land in a stage prefix. Verify size (and hash when known). Promote. Laptop-through-NFS is how you get two copies and a lie.</p>
+    </div>
+  </div>
+</section>
+
+<section class="band">
+  <div class="section-head">
+    <p class="section-eyebrow">rendition contract</p>
+    <h2 class="section-title">Originals are never overwritten.</h2>
+  </div>
+<pre>00_original → 10_assured → 20_extracted → 30_cleaned → 40_simplified →
+45_markdown → 50_accessible → 60_index → 70_exports
+
+batch = IngestionEngine().ingest(materials)
+verified = IngestionEngine().verify(batch)</pre>
+  <div class="callout" style="margin-top:1.6rem">
+    Callers acquire bytes and choose scope. The engine returns artifacts, portable indexes, and optional receipts — <strong>no</strong> direct network, filesystem, or database writes inside the module. Adapters consume return values.
+  </div>
+</section>
+
+<section class="band">
+  <div class="section-head">
+    <p class="section-eyebrow">siblings</p>
+    <h2 class="section-title">This is the custody sketch. The other pages are the house around it.</h2>
+  </div>
+  <div class="stack-grid">
+    <a class="stack-card" href="https://the1truedan.github.io/fast-models/">
+      <span class="role">the pool</span>
+      <h3>fast-models</h3>
+      <p>Btrfs + bees + host NFS. L3 lives there. This repo tells you not to confuse it with a file-hash report.</p>
+      <span class="link-hint">the1truedan.github.io/fast-models →</span>
+    </a>
+    <a class="stack-card" href="https://the1truedan.github.io/ai-gateway/">
+      <span class="role">the door</span>
+      <h3>ai-gateway</h3>
+      <p>Headroom → LiteLLM. Outside the file custody chain. Same audit spine is allowed as another event class — policy, not a second product.</p>
+      <span class="link-hint">the1truedan.github.io/ai-gateway →</span>
+    </a>
+    <a class="stack-card" href="https://the1truedan.github.io/grok-tua-tok-tua/">
+      <span class="role">the launchers</span>
+      <h3>grok-tua / tok-tua</h3>
+      <p>Dual-pane CLIs that show whether the door is up. They do not classify your PDFs.</p>
+      <span class="link-hint">the1truedan.github.io/grok-tua-tok-tua →</span>
+    </a>
+    <a class="stack-card" href="https://the1truedan.github.io/mok-tua/">
+      <span class="role">the pictures</span>
+      <h3>mok-tua</h3>
+      <p>Local Comfy storyboard box. The crate art on this page is conceptual; the origin comics live there.</p>
+      <span class="link-hint">the1truedan.github.io/mok-tua →</span>
+    </a>
+  </div>
+</section>
+
+<section class="band">
+  <div class="section-head">
+    <p class="section-eyebrow">how it came to be</p>
+    <h2 class="section-title">Care work produces paper. Then the same file shows up twice.</h2>
+  </div>
+  <div class="story">
+    <p>Notices, letters, scans, exports, model weights, tool installs. Early M.A.N.A.G.E.R. design chats kept returning to one problem: how do you classify and hash what you <strong>already hold</strong>, keep a plain custody trail, and never pretend a receipt log is a court seal?</p>
+    <p>This repo is the design sketch for that pipeline, split out so strangers can poke holes in it.</p>
+    <p><span class="tl">13 April 2026</span> — mission pivot. <span class="tl">June 2026</span> — monorepo coding. <span class="tl">Late July 2026</span> — modular public sketch. <span class="tl">6 August 2026</span> — alpha-intent narrative. <span class="tl">16 August 2026</span> — this page, plus the lab checks written down.</p>
+    <p>Independent. Not affiliated with any package ecosystem or download manager named in the catalog. © 2026 M.A.N.A.G.E.R. LLC — <em>prepare for the care when we cannot be there</em>.</p>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <span class="mu-mark">classify · hash · <span>receipt</span> — not a court seal</span>
+    <nav class="footer-links">
+      <a href="https://github.com/the1truedan/johnny-appleseed-chipper/blob/main/README.md">README</a>
+      <a href="https://github.com/the1truedan/johnny-appleseed-chipper/blob/main/CHANGELOG.md">Changelog</a>
+      <a href="https://github.com/the1truedan/johnny-appleseed-chipper/blob/main/LICENSE">MIT</a>
+      <a href="https://the1truedan.github.io/fast-models/">fast-models</a>
+      <a href="https://the1truedan.github.io/ai-gateway/">ai-gateway</a>
+    </nav>
+  </div>
+</footer>
+
+<script>
+(function () {
+  var canvas = document.getElementById('crate-rain');
+  if (!canvas || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  var ctx = canvas.getContext('2d');
+  var hero = canvas.parentElement;
+  var seeds = [], cubes = [], seals = [];
+  function size() {
+    var r = hero.getBoundingClientRect();
+    canvas.width = r.width; canvas.height = r.height;
+    seeds = []; cubes = []; seals = [];
+    var i, n = Math.max(10, Math.floor(r.width / 90));
+    for (i = 0; i < n; i++) {
+      seeds.push({ x: Math.random() * r.width, y: Math.random() * r.height, v: 0.25 + Math.random() * 0.4, s: 1.6 + Math.random() * 1.8 });
+      cubes.push({ x: Math.random() * r.width, y: Math.random() * r.height, v: 0.18 + Math.random() * 0.3, s: 4 + Math.random() * 5, a: Math.random() * Math.PI });
+      seals.push({ x: Math.random() * r.width, y: Math.random() * r.height, v: 0.2 + Math.random() * 0.35, s: 3 + Math.random() * 2 });
+    }
+  }
+  size();
+  window.addEventListener('resize', size);
+  function frame() {
+    var w = canvas.width, h = canvas.height, i, d;
+    ctx.fillStyle = 'rgba(20,17,13,0.22)';
+    ctx.fillRect(0, 0, w, h);
+    ctx.fillStyle = 'rgba(122,154,90,0.55)';
+    for (i = 0; i < seeds.length; i++) {
+      d = seeds[i]; d.y += d.v; if (d.y > h) { d.y = -6; d.x = Math.random() * w; }
+      ctx.beginPath(); ctx.ellipse(d.x, d.y, d.s * 0.6, d.s, 0.4, 0, Math.PI * 2); ctx.fill();
+    }
+    ctx.strokeStyle = 'rgba(201,162,39,0.55)';
+    ctx.lineWidth = 1.2;
+    for (i = 0; i < cubes.length; i++) {
+      d = cubes[i]; d.y += d.v; d.a += 0.008; if (d.y > h + 8) { d.y = -8; d.x = Math.random() * w; }
+      ctx.save(); ctx.translate(d.x, d.y); ctx.rotate(d.a);
+      ctx.strokeRect(-d.s / 2, -d.s / 2, d.s, d.s);
+      ctx.restore();
+    }
+    ctx.fillStyle = 'rgba(163,59,59,0.55)';
+    for (i = 0; i < seals.length; i++) {
+      d = seals[i]; d.y += d.v; if (d.y > h) { d.y = -6; d.x = Math.random() * w; }
+      ctx.beginPath(); ctx.arc(d.x, d.y, d.s, 0, Math.PI * 2); ctx.fill();
+    }
+    requestAnimationFrame(frame);
+  }
+  requestAnimationFrame(frame);
+})();
+</script>
+</body>
+</html>

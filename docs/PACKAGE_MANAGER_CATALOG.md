@@ -75,7 +75,35 @@ CHIPPER-later: treat lockfiles as **artifacts** with content hashes; SBOM export
 2. Land under a dedicated **`_dl` / stage** prefix.  
 3. Verify size (+ hash when known).  
 4. Promote into the model/doc pool.  
-5. Emit a C.H.A.I.N.S.-shaped receipt when the chain implementation exists.
+5. Emit a C.H.A.I.N.S.-shaped receipt when the chain implementation exists.  
+6. Before fetching a weight, list **sibling files** at the source (precision /
+   prune / quant variants). An announcement page often names one file and
+   omits the smaller one that actually fits.  
+7. Never treat the tag **`latest`** as provenance. Pin a digest or revision.
+
+### Callable Python envs (catalog, not reclaim)
+
+The lab now indexes known-good venvs as catalog objects so agents do not
+filewalk a pool after reboot. Public field shape:
+
+```json
+{
+  "kind": "python_venv",
+  "host_role": "gpu-host",
+  "os_family": "linux",
+  "arch": "x86_64",
+  "python_version": "3.12.3",
+  "parent_tool": "comfy",
+  "status": "candidate|smoke_pass|known_good|stale|broken"
+}
+```
+
+Rules:
+
+- L2 content-hash audits **skip** `.venv` / `venv` by default.  
+- **Never** share a Darwin env with a Linux env (or the reverse).  
+- `uv-cache` is a cache, not a callable env.  
+- Status `known_good` is a smoke result, not a bees reclaim plan.
 
 ## 6. Staged `manager` enum
 
@@ -90,7 +118,10 @@ docker | url | local | ollama | huggingface | fluxdown | other
 - No unattended `apt upgrade` / `brew upgrade` from this design.  
 - No credentialed store accounts in public docs.  
 - No private LAN URLs in this catalog (use roles).  
-- No claim that listing a manager means support is implemented.
+- No claim that listing a manager means support is implemented.  
+- No mixing Darwin and Linux virtualenvs as if they were one tool.  
+- Pool compression (zstd and friends) is a **mount property**, not a
+  package-manager action and not a cron job.
 
 ## See also
 

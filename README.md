@@ -11,9 +11,14 @@
 
 <p align="center">
   <a href="#the-ask-socratic-and-sincere"><img src="https://img.shields.io/badge/status-public_alpha_intent-blueviolet?style=for-the-badge" alt="public alpha intent" /></a>
+  <a href="CHANGELOG.md"><img src="https://img.shields.io/badge/version-0.2.0-c9a227?style=for-the-badge" alt="0.2.0" /></a>
+  <a href="https://the1truedan.github.io/johnny-appleseed-chipper/"><img src="https://img.shields.io/badge/pages-live-7a9a5a?style=for-the-badge" alt="GitHub Pages" /></a>
   <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-green?style=for-the-badge" alt="MIT" /></a>
   <a href="INDEX.md"><img src="https://img.shields.io/badge/map-INDEX-lightgrey?style=for-the-badge" alt="INDEX" /></a>
 </p>
+
+**Site:** [the1truedan.github.io/johnny-appleseed-chipper](https://the1truedan.github.io/johnny-appleseed-chipper/) ·
+**Release:** [`v0.2.0`](CHANGELOG.md)
 
 ---
 
@@ -170,6 +175,18 @@ Full table and earmarks: [docs/PACKAGE_MANAGER_CATALOG.md](docs/PACKAGE_MANAGER_
 4. **No auto system update** from this design — operator approval per host role.  
 5. **Separate layers of “savings”** — content-hash candidates ≠ bees physical reclaim ([docs/DEDUP_LAYERS.md](docs/DEDUP_LAYERS.md)).
 
+### What the internal tool actually checked (2026-08)
+
+These landed as process notes, not as product code in this tree:
+
+- **No unbounded `find`** on a storage-pool mount from a desk-host client. Agents read catalogs.
+- **L2 skips callable venvs.** Darwin and Linux environments are not one reclaim group.
+- **Apply / purge** needs `verified=true` and `all_hosts_readable=true`. A sha256-only *filter* of the report (Template G) is not an apply.
+- **Reshape audit JSON** if field names differ from the apply tool. Similar is not the same schema.
+- **Vendor libraries** match `.so`, `.so.N`, `.dylib` — not a literal `.so` suffix.
+- **zstd is a mount property**, not a cron job. Same-filesystem `mv` does not free space until `rm`.
+- **Receipt contract** is written down in [docs/CHAINS_AUDIT_CONTRACT.md](docs/CHAINS_AUDIT_CONTRACT.md). Still not a court seal.
+
 ---
 
 ## Status: active parallel alpha
@@ -178,6 +195,7 @@ Full table and earmarks: [docs/PACKAGE_MANAGER_CATALOG.md](docs/PACKAGE_MANAGER_
 |------|------|---------|
 | Modular sketch | late **July 2026** | First public-facing docs cut (process templates, plain-language README). |
 | **Alpha intent flip** | **2026-08-06** | Clean narrative; invite scrutiny; still **docs-first** — implementation gated. |
+| **Pages + lab checks** | **2026-08-16** | One-pager; process templates pick up what the internal tool actually learned. |
 | Parallel lab | ongoing | Real classify/hash/custody patterns exercise in private ops; code lands when seams stabilize. |
 
 **What ships in this git tree today:** design notes, process templates, example **indexes only** (no private paths, no weights, no PHI).  
@@ -191,7 +209,12 @@ Acceptance criteria for a *real* implementation remain in the design body of [do
 
 PDF/OCR/receipts, local tool versioning, multi-OS package earmarks, model catalog freshen, and cited-document archival all hang off the same three layers — **classify → hash/inspect → custody receipt**. See [docs/MANAGER_MODULE_MAP.md](docs/MANAGER_MODULE_MAP.md).
 
-Sibling public stacks (sanitized): [ai-gateway](https://github.com/the1truedan/ai-gateway).
+Sibling public stacks (sanitized):
+[fast-models](https://the1truedan.github.io/fast-models/) ·
+[ai-gateway](https://the1truedan.github.io/ai-gateway/) ·
+[grok-tua-tok-tua](https://the1truedan.github.io/grok-tua-tok-tua/) ·
+[mok-tua](https://the1truedan.github.io/mok-tua/) ·
+[cmip-terpene-db](https://the1truedan.github.io/cmip-terpene-db/).
 
 ---
 

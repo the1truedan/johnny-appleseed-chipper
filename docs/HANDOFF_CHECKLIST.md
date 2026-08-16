@@ -7,6 +7,7 @@
 - [x] README states **public alpha intent** (docs-first; not finished product)  
 - [x] Late July modular sketch narrative cleaned (status waves + socratic ask)  
 - [x] Package manager catalog + hero art; no private LAN download URLs in tree  
+- [x] Pages one-pager + `VERSION` / changelog (2026-08-16)  
 - [ ] Dashboards: Prometheus UIDs may be placeholders; document import steps in ops stacks  
 - [ ] Incident write-ups keep **process truth**, drop private log absolute paths if sensitive  
 - [x] Human/agent: visibility **public** 2026-08-06 + `main` protected (no force-push)
@@ -22,6 +23,7 @@
 ## After a dedup or bees ops wave
 
 - [ ] Catalog indexes filed under `johnny-chipper/…`  
-- [ ] Verification manifest attached if any execute path ran  
+- [ ] Verification manifest attached if any execute path ran (`verified` + `all_hosts_readable`)  
+- [ ] Apply JSON field names match the tool (reshape staged files first)  
 - [ ] Grafana / metrics still healthy (bees up, occupancy not stuck at 1.0)  
-- [ ] Public process templates updated if a new pattern was learned  
+- [x] Public process templates updated if a new pattern was learned (2026-08-16: Templates B/C/G, L2 venv skip, vendor `.so.N`)  

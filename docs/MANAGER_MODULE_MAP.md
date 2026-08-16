@@ -31,7 +31,8 @@ Rendition ladder (each tier records parent digest):
 | **Creative render pipelines** | Adjacent live pattern: append-only render receipts (hash-linked) for generative jobs — same *shape* as custody, separate chain id from care materials. |
 | **Storage / model pools** | Catalog indexes and content-hash reclaim sit beside bees-style physical dedup; do not conflate file-hash reclaim with block-level storage reclaim. |
 | **Local build dependencies** | Manifest scan (`package.json`, `requirements.txt`, `go.mod`, …) feeds SBOM/vuln-style inspection when built; results are indexed artifacts, not auto-upgrades. |
-| **Tool version board** | Coding CLIs and host tools recorded as `{tool_id, version, path, manager, probed_at}` for future env-mutation receipts. |
+| **Tool version board** | Coding CLIs and host tools recorded as `{tool_id, version, path, manager, probed_at}` for future env-mutation receipts. Probe-running is a live check; the catalog row is the durable one. |  
+| **Python env index** | Known-good venvs as catalog objects (`os_family`, `arch`, `parent_tool`, `status`). Not an L2 reclaim target. Darwin ≠ Linux. |
 | **brew / apt / asdf / Windows / macOS / Linux updates** | **Workstation inventory earmark only** — report staged versions; no automatic system update install from this design. Prefer explicit operator approval per host role. |
 | **Model versioning** | Weight/sidecar hashes + vendor metadata freshen (report-only queues); promote only after human review and hash verify. |
 | **Cited web / document history** | Allowlisted acquisition records URL, retrieve time, redirects, headers, license decision; originals never overwritten; re-index policies keep history. |
@@ -73,9 +74,20 @@ See [PACKAGE_MANAGER_CATALOG.md](./PACKAGE_MANAGER_CATALOG.md).
 - No automatic publication or cross-host copy.  
 - Care/PHI materials stay out of public mirrors.
 
+## Sibling public stacks (sanitized)
+
+| Surface | Role next to this trio |
+|---------|------------------------|
+| [fast-models](https://the1truedan.github.io/fast-models/) | Storage pool + bees (L3) |
+| [ai-gateway](https://the1truedan.github.io/ai-gateway/) | Model door; outside the file custody chain |
+| [grok-tua-tok-tua](https://the1truedan.github.io/grok-tua-tok-tua/) | Dual-pane launchers that watch the door |
+| [mok-tua](https://the1truedan.github.io/mok-tua/) | Local storyboard / render box |
+| [cmip-terpene-db](https://the1truedan.github.io/cmip-terpene-db/) | Schema sketch; no lab data |
+
 ## See also
 
-- [PROCESS_TEMPLATES.md](./PROCESS_TEMPLATES.md) — Templates A–F including public sanitize  
+- [PROCESS_TEMPLATES.md](./PROCESS_TEMPLATES.md) — Templates A–G including public sanitize  
+- [CHAINS_AUDIT_CONTRACT.md](./CHAINS_AUDIT_CONTRACT.md)  
 - [HANDOFF_CHECKLIST.md](./HANDOFF_CHECKLIST.md)  
 - [STAGED_CATALOG_LAYOUT.md](./STAGED_CATALOG_LAYOUT.md)  
 - [DEDUP_LAYERS.md](./DEDUP_LAYERS.md)  

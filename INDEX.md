@@ -13,7 +13,10 @@ Nothing here requires private LAN paths or care data.
 | [docs/PACKAGE_MANAGER_CATALOG.md](./docs/PACKAGE_MANAGER_CATALOG.md) | brew · apt · snap · winget · choco · FluxDown · versioning earmarks |
 | [docs/HANDOFF_CHECKLIST.md](./docs/HANDOFF_CHECKLIST.md) | Pre-public and pre-merge checklist |
 | [docs/MANAGER_MODULE_MAP.md](./docs/MANAGER_MODULE_MAP.md) | How Johnny/CHIPPER/CHAINS touch other M.A.N.A.G.E.R. surfaces |
-| [docs/assets/](./docs/assets/) | README hero art (dedup + architecture) |
+| [docs/CHAINS_AUDIT_CONTRACT.md](./docs/CHAINS_AUDIT_CONTRACT.md) | Receipt shape + audit invariants (not a court seal) |
+| [docs/index.html](./docs/index.html) | GitHub Pages one-pager |
+| [CHANGELOG.md](./CHANGELOG.md) | Versioned public notes |
+| [docs/assets/](./docs/assets/) | README / Pages hero art (dedup + architecture) |
 
 ## Domain one-liners
 
@@ -25,8 +28,11 @@ Nothing here requires private LAN paths or care data.
 
 | Repo / surface | Role |
 |----------------|------|
-| [ai-gateway](https://github.com/the1truedan/ai-gateway) | Model door + observability notes (sanitized) |
-| [fast-models / deploy notes](https://github.com/the1truedan/ai-gateway) | Shared AI file pool; bees sizing history (when published) |
+| [ai-gateway](https://the1truedan.github.io/ai-gateway/) | Model door + observability notes (sanitized) |
+| [fast-models](https://the1truedan.github.io/fast-models/) | Shared AI file pool; bees (L3) |
+| [grok-tua-tok-tua](https://the1truedan.github.io/grok-tua-tok-tua/) | Dual-pane launchers |
+| [mok-tua](https://the1truedan.github.io/mok-tua/) | Local storyboard / render |
+| [cmip-terpene-db](https://the1truedan.github.io/cmip-terpene-db/) | Schema sketch; no lab data |
 
 ## Status waves
 
@@ -34,6 +40,7 @@ Nothing here requires private LAN paths or care data.
 |------|---------|
 | late July 2026 | First modular docs sketch |
 | 2026-08-06 | Alpha-intent public narrative cleanup + art + package catalog |
+| 2026-08-16 | v0.2.0 — Pages one-pager + lab-check refresh (Templates B/C/G) |
 | later | Implementation when seams stabilize under scrutiny |
 
 Implementation intentionally gated; see HANDOFF checklist before writing production parsers.
